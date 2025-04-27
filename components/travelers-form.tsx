@@ -37,23 +37,48 @@ export function TravelersForm({ formData, updateFormData }: TravelersFormProps) 
     }
   }, [travelGroupType])
 
+  // This effect was causing the infinite loop - we need to handle it differently
+  useEffect(() => {
+    // Only update parent form data when component mounts
+    const data = {
+      travelGroupType,
+      travelersCount,
+    }
+    updateFormData(data)
+    // Intentionally not including updateFormData in dependencies
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleSliderChange = (value: number[]) => {
     setTravelersCount(value[0])
+    updateFormData({
+      travelGroupType,
+      travelersCount: value[0],
+    })
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number.parseInt(e.target.value)
     if (!isNaN(value) && value >= minTravelers) {
       setTravelersCount(value)
+      updateFormData({
+        travelGroupType,
+        travelersCount: value,
+      })
     }
   }
 
-  useEffect(() => {
-    updateFormData({
-      travelGroupType,
-      travelersCount,
-    })
-  }, [travelGroupType, travelersCount, updateFormData])
+  const handleGroupTypeChange = (value: string) => {
+    setTravelGroupType(value)
+    // We'll update the parent form data after the state has been updated
+    // and after the useEffect for travelGroupType has run
+    setTimeout(() => {
+      updateFormData({
+        travelGroupType: value,
+        travelersCount: value === "Solo Traveler" ? 1 : value === "Couple" ? 2 : Math.max(3, travelersCount),
+      })
+    }, 0)
+  }
 
   return (
     <div className="space-y-6">
@@ -64,7 +89,7 @@ export function TravelersForm({ formData, updateFormData }: TravelersFormProps) 
           <Label className="text-base font-medium mb-3 block">Travel Group Type</Label>
           <RadioGroup
             value={travelGroupType}
-            onValueChange={setTravelGroupType}
+            onValueChange={handleGroupTypeChange}
             className="grid grid-cols-1 md:grid-cols-2 gap-4"
           >
             <div className="flex items-center space-x-2 border rounded-md p-3 cursor-pointer hover:bg-muted">
