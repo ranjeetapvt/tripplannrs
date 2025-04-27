@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { generatePDF } from "@/lib/pdf-generator"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Download, Printer } from "lucide-react"
+import { ArrowLeft, Download } from "lucide-react"
 import Link from "next/link"
 
 export default function PrintItinerary({ params }: { params: { id: string } }) {
@@ -184,20 +184,6 @@ export default function PrintItinerary({ params }: { params: { id: string } }) {
     URL.revokeObjectURL(url)
   }
 
-  const handlePrint = () => {
-    const pdfBlob = generatePDF(mockItinerary)
-    const url = URL.createObjectURL(pdfBlob)
-    const iframe = document.createElement("iframe")
-    iframe.style.display = "none"
-    iframe.src = url
-    document.body.appendChild(iframe)
-    iframe.onload = () => {
-      iframe.contentWindow?.print()
-      document.body.removeChild(iframe)
-      URL.revokeObjectURL(url)
-    }
-  }
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 flex items-center justify-between">
@@ -209,14 +195,12 @@ export default function PrintItinerary({ params }: { params: { id: string } }) {
         </Link>
 
         <div className="flex gap-4">
-          <Button onClick={handleDownload} className="flex items-center gap-2">
+          <Button
+            onClick={handleDownload}
+            className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
+          >
             <Download size={18} />
             Download PDF
-          </Button>
-
-          <Button onClick={handlePrint} className="flex items-center gap-2">
-            <Printer size={18} />
-            Print
           </Button>
         </div>
       </div>

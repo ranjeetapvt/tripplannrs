@@ -75,7 +75,12 @@ export default function GenerateItinerary() {
               </Button>
             )}
             {step === 1 && <div />}
-            <Button onClick={nextStep}>{step < 6 ? "Next Step →" : "Generate Itinerary"}</Button>
+            <Button
+              onClick={nextStep}
+              className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
+            >
+              {step < 6 ? "Next Step →" : "Generate Itinerary"}
+            </Button>
           </div>
         </div>
       </div>

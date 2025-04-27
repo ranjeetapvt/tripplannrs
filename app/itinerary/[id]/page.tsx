@@ -218,7 +218,7 @@ export default function ItineraryView({ params }: { params: { id: string } }) {
           </Button>
 
           <Link href="/itinerary/1/pdf">
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
               <Printer size={18} />
               Print Itinerary
             </Button>

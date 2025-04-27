@@ -47,7 +47,9 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
       <div className="container mx-auto flex h-14 sm:h-16 items-center justify-between px-4">
         <Link href={isLoggedIn ? "/dashboard" : "/"} className="flex items-center space-x-2 font-bold">
-          <span>TripPlannrs</span>
+          <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+            TripPlannrs
+          </span>
         </Link>
 
         {/* Desktop Navigation */}

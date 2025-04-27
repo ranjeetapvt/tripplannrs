@@ -39,7 +39,7 @@ export default function Dashboard() {
 
         <div className="mb-6">
           <Link href="/generate">
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
               <PlusCircle size={18} />
               Create New Itinerary
             </Button>
